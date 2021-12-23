@@ -1,2 +1,3 @@
 # todolist
-Created with CodeSandbox
+
+Simple to do list app made with React

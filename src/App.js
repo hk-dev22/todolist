@@ -1,10 +1,15 @@
 import "./styles.css";
+import React, { Fragment } from "react";
+
+// Components
+import { Header } from "./components/Header";
+import { Todo } from "./components/Todo";
 
 export default function App() {
   return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-    </div>
+    <Fragment>
+      <Header />
+      <Todo />
+    </Fragment>
   );
 }
