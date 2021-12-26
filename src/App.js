@@ -7,13 +7,19 @@ import { Form } from "./components/Form";
 import { Todo } from "./components/Todo";
 
 export default function App() {
+  const localTodos =
+    localStorage.getItem("todos") === null
+      ? []
+      : JSON.parse(localStorage.getItem("todos"));
   const [inputText, setInputText] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(localTodos);
   const [selected, setSelected] = useState("all");
   const [filterTodos, setFilterTodos] = useState(todos);
+  console.log(localTodos);
 
   useEffect(() => {
     filterHandler();
+    saveLocalTodos();
   }, [todos, selected]);
 
   const filterHandler = () => {
@@ -29,6 +35,18 @@ export default function App() {
         break;
     }
   };
+
+  const saveLocalTodos = () => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  };
+
+  // const getLocalTodos = () => {
+  //   if (localStorage.getItem("todos") === null) {
+  //     localStorage.setItem("todos", JSON.stringify([]));
+  //   }
+  //   localStorage.setItem("todos", JSON.stringify(todos));
+  // };
+
   return (
     <Fragment>
       <Header />
@@ -39,8 +57,6 @@ export default function App() {
         setInputText={setInputText}
         selected={selected}
         setSelected={setSelected}
-        filterTodos={filterTodos}
-        setFilterTodos={setFilterTodos}
       />
       <Todo
         todos={todos}
