@@ -7,15 +7,17 @@ export function Form(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    props.setTodos([
-      ...props.todos,
-      {
-        value: props.inputText,
-        completed: false,
-        id: Date.now()
-      }
-    ]);
-    props.setInputText("");
+    if (props.inputText !== "") {
+      props.setTodos([
+        ...props.todos,
+        {
+          value: props.inputText,
+          completed: false,
+          id: Date.now()
+        }
+      ]);
+      props.setInputText("");
+    }
   };
 
   const selectHandler = (e) => {

@@ -1,5 +1,7 @@
 import "./styles.css";
 import React, { Fragment, useState, useEffect } from "react";
+import store from "./store/store";
+import { Provider } from "react-redux";
 
 // Components
 import { Header } from "./components/Header";
