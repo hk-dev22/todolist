@@ -1,19 +1,27 @@
 import React from "react";
 import "../assets/style.css";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setTodos } from "../store/actions";
+
 export function Todoitem(props) {
+  const todos = useSelector((state) => state.todosReducer);
+  const dispatch = useDispatch();
+
   const deleteHandler = () => {
-    props.setTodos(props.todos.filter((todo) => todo.id !== props.todo.id));
+    dispatch(setTodos(todos.filter((todo) => todo.id !== props.todo.id)));
   };
 
   const completeHandler = () => {
-    props.setTodos(
-      props.todos.map((item) => {
-        if (item.id === props.todo.id) {
-          return { ...item, completed: !item.completed };
-        }
-        return item;
-      })
+    dispatch(
+      setTodos(
+        todos.map((item) => {
+          if (item.id === props.todo.id) {
+            return { ...item, completed: !item.completed };
+          }
+          return item;
+        })
+      )
     );
   };
 
@@ -22,10 +30,10 @@ export function Todoitem(props) {
       <li className={`todo-item ${props.todo.completed ? "completed" : ""}`}>
         {props.todo.value}
       </li>
-      <button className="complete-btn" onClick={completeHandler}>
+      <button className="complete-btn" onClick={() => completeHandler()}>
         <i className="fas fa-check" />
       </button>
-      <button className="trash-btn" onClick={deleteHandler}>
+      <button className="trash-btn" onClick={() => deleteHandler()}>
         <i className="fas fa-trash"></i>`
       </button>
     </div>

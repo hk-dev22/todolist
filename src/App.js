@@ -1,7 +1,7 @@
 import "./styles.css";
-import React, { Fragment, useState, useEffect } from "react";
-import store from "./store/store";
-import { Provider } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setTodos, setFilterTodos } from "./store/actions";
 
 // Components
 import { Header } from "./components/Header";
@@ -9,31 +9,39 @@ import { Form } from "./components/Form";
 import { Todo } from "./components/Todo";
 
 export default function App() {
+  // Get the todos from local storage
+  const todos = useSelector((state) => state.todosReducer);
+  const selected = useSelector((state) => state.select);
+  const dispatch = useDispatch();
+
   const localTodos =
     localStorage.getItem("todos") === null
       ? []
       : JSON.parse(localStorage.getItem("todos"));
-  const [inputText, setInputText] = useState("");
-  const [todos, setTodos] = useState(localTodos);
-  const [selected, setSelected] = useState("all");
-  const [filterTodos, setFilterTodos] = useState(todos);
-  console.log(localTodos);
 
-  useEffect(() => {
-    filterHandler();
-    saveLocalTodos();
-  }, [todos, selected]);
+  // (() => {
+  //   dispatch(setTodos(localTodos));
+  // })();
+
+  // const [inputText, setInputText] = useState("");
+  // const [todos, setTodos] = useState(localTodos);
+  // const [selected, setSelected] = useState("all");
+  // const [filterTodos, setFilterTodos] = useState(todos);
 
   const filterHandler = () => {
     switch (selected) {
       case "completed":
-        setFilterTodos(todos.filter((todo) => todo.completed === true));
+        dispatch(
+          setFilterTodos(todos.filter((todo) => todo.completed === true))
+        );
         break;
       case "uncompleted":
-        setFilterTodos(todos.filter((todo) => todo.completed === false));
+        dispatch(
+          setFilterTodos(todos.filter((todo) => todo.completed === false))
+        );
         break;
       default:
-        setFilterTodos(todos);
+        dispatch(setFilterTodos(todos));
         break;
     }
   };
@@ -42,32 +50,16 @@ export default function App() {
     localStorage.setItem("todos", JSON.stringify(todos));
   };
 
-  // const getLocalTodos = () => {
-  //   if (localStorage.getItem("todos") === null) {
-  //     localStorage.setItem("todos", JSON.stringify([]));
-  //   }
-  //   localStorage.setItem("todos", JSON.stringify(todos));
-  // };
+  useEffect(() => {
+    filterHandler();
+    saveLocalTodos();
+  }, [todos, selected, dispatch]);
 
   return (
     <Fragment>
       <Header />
-      <Form
-        todos={todos}
-        setTodos={setTodos}
-        inputText={inputText}
-        setInputText={setInputText}
-        selected={selected}
-        setSelected={setSelected}
-      />
-      <Todo
-        todos={todos}
-        setTodos={setTodos}
-        selected={selected}
-        setSelected={setSelected}
-        filterTodos={filterTodos}
-        setFilterTodos={setFilterTodos}
-      />
+      <Form />
+      <Todo />
     </Fragment>
   );
 }
