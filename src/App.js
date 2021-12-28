@@ -14,11 +14,6 @@ export default function App() {
   const selected = useSelector((state) => state.select);
   const dispatch = useDispatch();
 
-  const localTodos =
-    localStorage.getItem("todos") === null
-      ? []
-      : JSON.parse(localStorage.getItem("todos"));
-
   // (() => {
   //   dispatch(setTodos(localTodos));
   // })();

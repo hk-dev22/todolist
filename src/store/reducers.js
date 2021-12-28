@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
 
-const todosReducer = (state = [], action) => {
+const localTodos =
+  localStorage.getItem("todos") === null
+    ? []
+    : JSON.parse(localStorage.getItem("todos"));
+
+const todosReducer = (state = localTodos, action) => {
   switch (action.type) {
     case "SET_TODOS":
       return action.payload;
@@ -18,7 +23,7 @@ const inputReducer = (state = "", action) => {
   }
 };
 
-const filterReducer = (state = [], action) => {
+const filterReducer = (state = localTodos, action) => {
   switch (action.type) {
     case "SET_FILTER":
       return action.payload;
