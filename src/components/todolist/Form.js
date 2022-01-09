@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setInputText, setTodos, selectFilter } from "../store/actions";
+import { setInputText, setTodos, selectFilter } from "../../store/actions";
 
 export function Form(props) {
   const inputText = useSelector((state) => state.inputReducer);
@@ -33,7 +33,7 @@ export function Form(props) {
   };
 
   return (
-    <form onSubmit={(e) => submitHandler(e)}>
+    <form className="form-todo" onSubmit={(e) => submitHandler(e)}>
       <input
         type="text"
         className="todo-input"

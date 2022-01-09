@@ -1,8 +1,7 @@
 import React from "react";
-import "../assets/style.css";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setTodos } from "../store/actions";
+import { setTodos } from "../../store/actions";
 
 export function Todoitem(props) {
   const todos = useSelector((state) => state.todosReducer);

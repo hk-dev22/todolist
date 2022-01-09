@@ -1,7 +1,7 @@
 import React from "react";
-import "../assets/style.css";
 import { useSelector } from "react-redux";
 import { Todoitem } from "./Todoitem";
+import "../../assets/style.css";
 
 export function Todo(props) {
   const filterTodos = useSelector((state) => state.filterReducer);
